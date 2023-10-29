@@ -13,7 +13,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
+    "baseUrl": ".",
+    "paths": {
+      "@domain": ["src/domain/index.ts"],
+      "@ui": ["src/ui/index.ts"],
+      "@application": ["src/application/index.ts"],
+      "@router": ["src/router/index.ts"],
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

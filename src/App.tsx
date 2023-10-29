@@ -1,7 +1,13 @@
 import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import { Routing } from "./router/Routing";
 
 function App() {
-  return <>Weather Site</>;
+  return (
+    <BrowserRouter>
+      <Routing />
+    </BrowserRouter>
+  );
 }
 
 export default App;
