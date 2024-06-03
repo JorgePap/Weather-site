@@ -1,2 +1,2 @@
 export * from './home-page';
-export * from './five-days-forecast-page';
+export * from './cities-management';
