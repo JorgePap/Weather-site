@@ -24,7 +24,11 @@ export const FiveDaysForecast: React.FC = () => {
         maxTemprature={3}
         svgIcon={<SunnyWeatherIcon />}
       />
-      <button className="rounded-lg bg-white/[20%]">5-day forecast</button>
+      <div className="flex justify-center w-full">
+        <button className="rounded-lg bg-white/[20%] w-full max-w-[15rem]">
+          5-day forecast
+        </button>
+      </div>
     </div>
   );
 };

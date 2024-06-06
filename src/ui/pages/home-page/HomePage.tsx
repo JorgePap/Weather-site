@@ -17,7 +17,7 @@ import {
 import { IAutoComplete, IForecast, IWeather, PATHS } from "@domain";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import { AnimatedPage, FiveDaysForecast } from "@ui";
+import { AnimatedPage, FiveDaysForecast, InfoBox } from "@ui";
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +64,22 @@ export const HomePage: React.FC = () => {
         <div>
           <FiveDaysForecast />
         </div>
-        <div>other informations</div>
+        <div className="flex flex-wrap gap-4">
+          <InfoBox title={"UV"} info={weatherData?.current?.uv} />
+          <InfoBox
+            title={"Humidity"}
+            info={weatherData?.current?.humidity}
+            unit="percentage"
+          />
+          <InfoBox
+            title={"Real feel"}
+            info={weatherData?.current?.feelslike_c}
+            unit="celsius"
+          />
+          <InfoBox title={"Wind"} info={"29"} />
+          <InfoBox title={"Sunset"} info={"29"} />
+          <InfoBox title={"Pressure"} info={"29"} />
+        </div>
         <div>{autoCompleteData?.[0]?.name}</div>
       </div>
     </AnimatedPage>
