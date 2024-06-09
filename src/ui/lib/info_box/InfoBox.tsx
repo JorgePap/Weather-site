@@ -17,7 +17,7 @@ export const InfoBox: React.FC<Props> = ({ title, info, unit }) => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-between rounded-lg p-5 w-[95px] min-w-[95px] h-[95px] bg-white ">
+    <div className="flex flex-col items-center justify-between rounded-lg p-5 w-[120px] min-w-[120px] h-[120px] bg-white ">
       <h4 className="font-light">{title}</h4>
       <p className="font-semibold">
         {info} {getUnitSymbol()}

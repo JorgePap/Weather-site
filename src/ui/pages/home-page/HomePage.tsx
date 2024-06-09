@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./home-page.module.css";
 import {
   fetchWeather,
@@ -35,6 +35,20 @@ export const HomePage: React.FC = () => {
     // dispatch(fetchAutoComplete("Lon"));
   }, []);
 
+  const shouldShowSunset = (
+    currentTime: string,
+    sunriseTime: string,
+    sunsetTime: string
+  ): boolean => {
+    return currentTime >= sunriseTime && currentTime < sunsetTime;
+  };
+
+  const showSunset = shouldShowSunset(
+    weatherData?.location?.localtime,
+    forecastData?.forecast?.forecastday[0]?.astro?.sunrise,
+    forecastData?.forecast?.forecastday[0]?.astro?.sunset
+  );
+
   return (
     <AnimatedPage>
       <div
@@ -64,7 +78,7 @@ export const HomePage: React.FC = () => {
         <div>
           <FiveDaysForecast />
         </div>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <InfoBox title={"UV"} info={weatherData?.current?.uv} />
           <InfoBox
             title={"Humidity"}
@@ -76,9 +90,25 @@ export const HomePage: React.FC = () => {
             info={weatherData?.current?.feelslike_c}
             unit="celsius"
           />
-          <InfoBox title={"Wind"} info={"29"} />
-          <InfoBox title={"Sunset"} info={"29"} />
-          <InfoBox title={"Pressure"} info={"29"} />
+          <InfoBox
+            title={"Wind"}
+            info={`${weatherData?.current?.wind_kph} ${weatherData?.current?.wind_dir}`}
+          />
+          {showSunset ? (
+            <InfoBox
+              title={"Sunset"}
+              info={forecastData?.forecast?.forecastday[0]?.astro?.sunset}
+            />
+          ) : (
+            <InfoBox
+              title={"Sunrise"}
+              info={forecastData?.forecast?.forecastday[0]?.astro?.sunrise}
+            />
+          )}
+          <InfoBox
+            title={"Pressure"}
+            info={`${weatherData?.current?.pressure_mb} mbar`}
+          />
         </div>
         <div>{autoCompleteData?.[0]?.name}</div>
       </div>
