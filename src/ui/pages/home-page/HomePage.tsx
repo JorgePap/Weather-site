@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./home-page.module.css";
 import {
   fetchWeather,
@@ -17,7 +17,7 @@ import {
 import { IAutoComplete, IForecast, IWeather, PATHS } from "@domain";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import { AnimatedPage, FiveDaysForecast, InfoBox } from "@ui";
+import { AnimatedPage, FiveDaysForecast, InfoBox, Warnings } from "@ui";
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +34,17 @@ export const HomePage: React.FC = () => {
     dispatch(fetchForecast({ location: "Athens", days: 5 }));
     // dispatch(fetchAutoComplete("Lon"));
   }, []);
+
+  const formatTime = (isoTimeString: string): string => {
+    const date = new Date(isoTimeString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
 
   const shouldShowSunset = (
     currentTime: string,
@@ -74,6 +85,13 @@ export const HomePage: React.FC = () => {
             {Math.round(forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c)}
             &deg;
           </div>
+        </div>
+        <div>
+          <Warnings
+            category={forecastData?.alerts?.alert[0]?.category}
+            effective={formatTime(forecastData?.alerts?.alert[0]?.effective)}
+            expires={formatTime(forecastData?.alerts?.alert[0]?.expires)}
+          />
         </div>
         <div>
           <FiveDaysForecast />

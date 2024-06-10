@@ -4,3 +4,4 @@ export * from './animatedpage';
 export * from './five_days_forecast';
 export * from './one_day_forecast';
 export * from './info_box';
+export * from './warnings';

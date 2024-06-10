@@ -8,6 +8,7 @@ export const fetchForecast = async (requestParams:IGetForecastRequest) => {
       q: requestParams.location,
       days: requestParams.days,
       aqi: "yes",
+      alerts: "yes",
     }
   })
 
