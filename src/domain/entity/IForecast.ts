@@ -1,8 +1,8 @@
-import { IWeather } from "."
-
-export interface IForecast extends IWeather{
-    forecast: Forecast
-    alerts: Alerts
+export interface IForecast{
+  location: Location
+  current: Current
+  forecast: Forecast
+  alerts: Alerts
   }
   
   export interface Location {
@@ -35,6 +35,12 @@ export interface IForecast extends IWeather{
     cloud: number
     feelslike_c: number
     feelslike_f: number
+    windchill_c: number
+    windchill_f: number
+    heatindex_c: number
+    heatindex_f: number
+    dewpoint_c: number
+    dewpoint_f: number
     vis_km: number
     vis_miles: number
     uv: number
@@ -93,7 +99,6 @@ export interface IForecast extends IWeather{
     daily_chance_of_snow: number
     condition: Condition2
     uv: number
-    air_quality: AirQuality
   }
   
   export interface Condition2 {
@@ -101,7 +106,6 @@ export interface IForecast extends IWeather{
     icon: string
     code: number
   }
-  
   
   export interface Astro {
     sunrise: string
@@ -129,6 +133,7 @@ export interface IForecast extends IWeather{
     pressure_in: number
     precip_mm: number
     precip_in: number
+    snow_cm: number
     humidity: number
     cloud: number
     feelslike_c: number
@@ -148,7 +153,6 @@ export interface IForecast extends IWeather{
     gust_mph: number
     gust_kph: number
     uv: number
-    air_quality: AirQuality
   }
   
   export interface Condition3 {
@@ -176,3 +180,4 @@ export interface IForecast extends IWeather{
     desc: string
     instruction: string
   }
+  

@@ -73,60 +73,66 @@ export const HomePage: React.FC = () => {
             <CiSearch size="16px" />
           </Link>
         </div>
-        <div className="flex flex-col gap-1 mb-5 gap items-left">
-          <div className="self-center text-3xl font-light">
-            {weatherData?.location?.name}
+        <div className="flex flex-col w-full gap-5">
+          <div className="flex flex-col gap-1 gap items-left">
+            <div className="self-center text-3xl font-light">
+              {weatherData?.location?.name}
+            </div>
+            <div className="text-6xl">{weatherData?.current?.temp_c}&deg;</div>
+            <div>
+              {weatherData?.current?.condition.text}{" "}
+              {Math.round(
+                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
+              )}
+              &deg;/
+              {Math.round(
+                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
+              )}
+              &deg;
+            </div>
           </div>
-          <div className="text-6xl">{weatherData?.current?.temp_c}&deg;</div>
           <div>
-            {weatherData?.current?.condition.text}{" "}
-            {Math.round(forecastData?.forecast?.forecastday[0]?.day?.mintemp_c)}
-            &deg;/
-            {Math.round(forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c)}
-            &deg;
+            <Warnings
+              category={forecastData?.alerts?.alert[0]?.category}
+              effective={formatTime(forecastData?.alerts?.alert[0]?.effective)}
+              expires={formatTime(forecastData?.alerts?.alert[0]?.expires)}
+            />
           </div>
-        </div>
-        <div>
-          <Warnings
-            category={forecastData?.alerts?.alert[0]?.category}
-            effective={formatTime(forecastData?.alerts?.alert[0]?.effective)}
-            expires={formatTime(forecastData?.alerts?.alert[0]?.expires)}
-          />
-        </div>
-        <div>
-          <FiveDaysForecast />
-        </div>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <InfoBox title={"UV"} info={weatherData?.current?.uv} />
-          <InfoBox
-            title={"Humidity"}
-            info={weatherData?.current?.humidity}
-            unit="percentage"
-          />
-          <InfoBox
-            title={"Real feel"}
-            info={weatherData?.current?.feelslike_c}
-            unit="celsius"
-          />
-          <InfoBox
-            title={"Wind"}
-            info={`${weatherData?.current?.wind_kph} ${weatherData?.current?.wind_dir}`}
-          />
-          {showSunset ? (
+          <div>
+            <FiveDaysForecast />
+          </div>
+          <div className="grid grid-cols-3 auto-cols-min w-max self-center gap-4">
+            <InfoBox title={"UV"} info={weatherData?.current?.uv} />
             <InfoBox
-              title={"Sunset"}
-              info={forecastData?.forecast?.forecastday[0]?.astro?.sunset}
+              title={"Humidity"}
+              info={weatherData?.current?.humidity}
+              unit="percentage"
             />
-          ) : (
             <InfoBox
-              title={"Sunrise"}
-              info={forecastData?.forecast?.forecastday[0]?.astro?.sunrise}
+              title={"Real feel"}
+              info={weatherData?.current?.feelslike_c}
+              unit="celsius"
             />
-          )}
-          <InfoBox
-            title={"Pressure"}
-            info={`${weatherData?.current?.pressure_mb} mbar`}
-          />
+            <InfoBox
+              title={"Wind"}
+              info={`${weatherData?.current?.wind_kph} ${weatherData?.current?.wind_dir}`}
+            />
+            {showSunset ? (
+              <InfoBox
+                title={"Sunset"}
+                info={forecastData?.forecast?.forecastday[0]?.astro?.sunset}
+              />
+            ) : (
+              <InfoBox
+                title={"Sunrise"}
+                info={forecastData?.forecast?.forecastday[0]?.astro?.sunrise}
+              />
+            )}
+            <InfoBox
+              title={"Pressure"}
+              info={`${weatherData?.current?.pressure_mb} mbar`}
+            />
+          </div>
         </div>
         <div>{autoCompleteData?.[0]?.name}</div>
       </div>

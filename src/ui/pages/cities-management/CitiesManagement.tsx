@@ -9,6 +9,7 @@ import { AnimatedPage, Input } from "@ui";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { City } from "./components";
 
 export const CitiesManagement: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -76,29 +77,33 @@ export const CitiesManagement: React.FC = () => {
               />
             </form>
           </div>
-          <div className="flex content-center justify-between items-center bg-[#3366A5] rounded-xl px-3 py-4">
-            <div className="flex flex-col">
-              <p>{forecastData?.location?.name}</p>
-              <div className="flex gap-4">
-                <p> Air Quality : </p>
-                <p>
-                  {
-                    AIRQUALITY[
-                      forecastData?.forecast?.forecastday[0]?.day
-                        ?.air_quality?.["us-epa-index"]
-                    ]
-                  }
-                </p>
-                <p>
-                  {forecastData?.forecast?.forecastday[0]?.day?.mintemp_c}&deg;
-                  / {forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c}
-                  &deg;
-                </p>
-              </div>
-            </div>
-            <h4 className="pr-3 text-2xl">
-              {forecastData?.current?.temp_c} &deg;
-            </h4>
+          <div className="flex flex-col gap-2">
+            <City
+              cityName={forecastData?.location?.name}
+              airQuality={
+                AIRQUALITY[forecastData?.current?.air_quality?.["us-epa-index"]]
+              }
+              minTemprature={
+                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
+              }
+              maxTemprature={
+                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
+              }
+              currentTemprature={forecastData?.current?.temp_c}
+            />
+            <City
+              cityName={forecastData?.location?.name}
+              airQuality={
+                AIRQUALITY[forecastData?.current?.air_quality?.["us-epa-index"]]
+              }
+              minTemprature={
+                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
+              }
+              maxTemprature={
+                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
+              }
+              currentTemprature={forecastData?.current?.temp_c}
+            />
           </div>
         </div>
       </div>
