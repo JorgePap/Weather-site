@@ -3,6 +3,8 @@ import {
   selectForecastData,
   useAppDispatch,
   useAppSelector,
+  selectAllCitiesData,
+  ForecastState,
 } from "@application";
 import { AIRQUALITY, IForecast, PATHS } from "@domain";
 import { AnimatedPage, Input } from "@ui";
@@ -13,8 +15,11 @@ import { City } from "./components";
 
 export const CitiesManagement: React.FC = () => {
   const dispatch = useAppDispatch();
-  const forecastData: IForecast = useAppSelector(selectForecastData);
+  const allCitiesData: string[] = useAppSelector(selectAllCitiesData);
+  const forecastData: { [key: string]: ForecastState } =
+    useAppSelector(selectForecastData);
 
+  const [secondScrollY, setSecondScrollY] = useState(0);
   const [upperCitiesManagementClasses, setUpperCitiesManagementClasses] =
     useState<string>("hidden");
   const [
@@ -24,9 +29,16 @@ export const CitiesManagement: React.FC = () => {
 
   const hasScrolled = useRef(false); // useRef to track if the dispatch has occurred
 
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition <= 50) {
+      setSecondScrollY(scrollPosition);
+    }
+  };
+
   const handleCitiesManagementShow = () => {
     // Check if the user has scrolled more than 100px from the top
-    if (window.scrollY > 10) {
+    if (window.scrollY > 200) {
       if (hasScrolled.current === false) {
         setUpperCitiesManagementClasses("block");
         setSecondCitiesManagementItemClasses("hidden");
@@ -42,16 +54,26 @@ export const CitiesManagement: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchForecast({ location: "Xanthi", days: 5 }));
-
     // Add scroll event listener when the component mounts
     window.addEventListener("scroll", handleCitiesManagementShow);
+    window.addEventListener("scroll", handleScroll);
 
     // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleCitiesManagementShow);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    allCitiesData.map((city) => {
+      dispatch(fetchForecast({ location: city, days: 5 }));
+    });
+  }, [dispatch, allCitiesData]);
+
+  // Calculate the scale factor based on the scroll position
+  const scaleFactor = 1 - secondScrollY / 50; // Scale from 1 to 0 as the user scrolls from 0px to 100px
+  const opacityFactor = 1 - secondScrollY / 50; // Opacity from 1 to 0 as the user scrolls from 0px to 100px
 
   return (
     <AnimatedPage>
@@ -64,47 +86,48 @@ export const CitiesManagement: React.FC = () => {
             Cities Management
           </p>
         </div>
-
         <div className="flex w-full flex-col gap-2 px-2 py-5">
           <h1 className={`${secondCitiesManagementItemClasses}`}>
             Cities Management
           </h1>
-          <div className="px-2">
-            <form>
+          <div
+            className="px-2"
+            style={{
+              transform: `scaleY(${scaleFactor})`,
+              opacity: opacityFactor,
+            }}
+          >
+            <form className="w-full transition-all duration-300 focus:outline-none">
               <Input
                 name={"SearchCity"}
                 onLocationSelected={() => console.log("Selected Location:")}
               />
             </form>
           </div>
-          <div className="flex flex-col gap-2">
-            <City
-              cityName={forecastData?.location?.name}
-              airQuality={
-                AIRQUALITY[forecastData?.current?.air_quality?.["us-epa-index"]]
-              }
-              minTemprature={
-                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
-              }
-              maxTemprature={
-                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
-              }
-              currentTemprature={forecastData?.current?.temp_c}
-            />
-            <City
-              cityName={forecastData?.location?.name}
-              airQuality={
-                AIRQUALITY[forecastData?.current?.air_quality?.["us-epa-index"]]
-              }
-              minTemprature={
-                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
-              }
-              maxTemprature={
-                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
-              }
-              currentTemprature={forecastData?.current?.temp_c}
-            />
-          </div>
+
+          <ul className="flex flex-col gap-2">
+            {Object.values(forecastData).map(({ data: city }) => {
+              if (!city) return null;
+
+              return (
+                <li key={city.location.name}>
+                  <City
+                    cityName={city?.location?.name}
+                    airQuality={
+                      AIRQUALITY[city?.current?.air_quality?.["us-epa-index"]]
+                    }
+                    minTemprature={
+                      city?.forecast?.forecastday[0]?.day?.mintemp_c
+                    }
+                    maxTemprature={
+                      city?.forecast?.forecastday[0]?.day?.maxtemp_c
+                    }
+                    currentTemprature={city?.current?.temp_c}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </AnimatedPage>

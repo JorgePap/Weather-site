@@ -1,7 +1,7 @@
 interface Props {
-  category: string;
-  effective: string;
-  expires: string;
+  category?: string;
+  effective?: string;
+  expires?: string;
 }
 
 export const Warnings: React.FC<Props> = ({

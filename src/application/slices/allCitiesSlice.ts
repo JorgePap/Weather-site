@@ -6,7 +6,7 @@ interface AllCitiesState {
 }
 
 const initialState: AllCitiesState = {
-    data: [],
+    data: ["Athens", "London"], // Initialize with Athens
 }
 
 export const allCitiesSlice = createSlice({
@@ -14,10 +14,15 @@ export const allCitiesSlice = createSlice({
     initialState,
     reducers: {
         addCity: (state, action: PayloadAction<string>) => {
-            state.data?.push(action.payload)
+            if (!state.data.includes(action.payload)) {
+                state.data.push(action.payload);
+              }
         },
         removeCity: (state, action: PayloadAction<string>) => {
-            state.data = state.data?.filter(city => city !== action.payload)
+            if (!state.data.includes(action.payload)) {
+                state.data = state.data?.filter(city => city !== action.payload)
+            }
+            
         },
     },
 },);

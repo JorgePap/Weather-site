@@ -1,7 +1,7 @@
 interface Props {
-  day: string;
-  minTemprature: number;
-  maxTemprature: number;
+  day?: string;
+  minTemprature?: number;
+  maxTemprature?: number;
   svgIcon: React.ReactNode;
 }
 

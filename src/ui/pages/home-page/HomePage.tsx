@@ -11,8 +11,8 @@ import {
   fetchAutoComplete,
   selectAllCitiesData,
   selectActiveCityData,
-  addCity,
   setActiveCity,
+  ForecastState,
 } from "@application";
 import { IAutoComplete, IForecast, IWeather, PATHS } from "@domain";
 import { Link } from "react-router-dom";
@@ -24,18 +24,33 @@ export const HomePage: React.FC = () => {
   const allCitiesData: string[] = useAppSelector(selectAllCitiesData);
   const activeCityData: string = useAppSelector(selectActiveCityData);
   const weatherData: IWeather = useAppSelector(selectWeatherData);
-  const forecastData: IForecast = useAppSelector(selectForecastData);
+  const forecastData: { [key: string]: ForecastState } =
+    useAppSelector(selectForecastData);
   const autoCompleteData: IAutoComplete[] = useAppSelector(selectAutoComplete);
+  const activeCityForecastObject = forecastData[activeCityData];
+
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   useEffect(() => {
-    dispatch(addCity("Athens"));
-    dispatch(setActiveCity("Athens"));
-    dispatch(fetchWeather("Athens"));
-    dispatch(fetchForecast({ location: "Athens", days: 5 }));
+    const city = "Athens";
+    if (!activeCityData) {
+      dispatch(setActiveCity(city));
+      dispatch(fetchWeather(city));
+      dispatch(fetchForecast({ location: city, days: 3 }));
+    }
     // dispatch(fetchAutoComplete("Lon"));
-  }, []);
+  }, [dispatch, activeCityData]);
 
-  const formatTime = (isoTimeString: string): string => {
+  const formatTime = (isoTimeString?: string): string | undefined => {
+    if (!isoTimeString) return undefined;
     const date = new Date(isoTimeString);
     const year = date.getFullYear();
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -56,9 +71,18 @@ export const HomePage: React.FC = () => {
 
   const showSunset = shouldShowSunset(
     weatherData?.location?.localtime,
-    forecastData?.forecast?.forecastday[0]?.astro?.sunrise,
-    forecastData?.forecast?.forecastday[0]?.astro?.sunset
+    activeCityForecastObject?.data?.forecast?.forecastday[0]?.astro?.sunrise ??
+      "",
+    activeCityForecastObject?.data?.forecast?.forecastday[0]?.astro?.sunset ??
+      ""
   );
+
+  const todaysMinTemp =
+    activeCityForecastObject?.data?.forecast?.forecastday[0]?.day?.mintemp_c;
+  const todaysMaxTemp =
+    activeCityForecastObject?.data?.forecast?.forecastday[0]?.day?.maxtemp_c;
+
+  console.log(activeCityForecastObject?.data?.forecast?.forecastday[3]?.date);
 
   return (
     <AnimatedPage>
@@ -81,26 +105,61 @@ export const HomePage: React.FC = () => {
             <div className="text-6xl">{weatherData?.current?.temp_c}&deg;</div>
             <div>
               {weatherData?.current?.condition.text}{" "}
-              {Math.round(
-                forecastData?.forecast?.forecastday[0]?.day?.mintemp_c
-              )}
+              {todaysMinTemp ? Math.round(todaysMinTemp) : undefined}
               &deg;/
-              {Math.round(
-                forecastData?.forecast?.forecastday[0]?.day?.maxtemp_c
-              )}
+              {todaysMaxTemp ? Math.round(todaysMaxTemp) : undefined}
               &deg;
             </div>
           </div>
           <div>
             <Warnings
-              category={forecastData?.alerts?.alert[0]?.category}
-              effective={formatTime(forecastData?.alerts?.alert[0]?.effective)}
-              expires={formatTime(forecastData?.alerts?.alert[0]?.expires)}
+              category={
+                activeCityForecastObject?.data?.alerts?.alert[0]?.category
+              }
+              effective={formatTime(
+                activeCityForecastObject?.data?.alerts?.alert[0]?.effective
+              )}
+              expires={formatTime(
+                activeCityForecastObject?.data?.alerts?.alert[0]?.expires
+              )}
             />
           </div>
-          <div>
-            <FiveDaysForecast />
-          </div>
+
+          <FiveDaysForecast
+            dayOne={
+              weekday[
+                new Date(
+                  activeCityForecastObject?.data?.forecast?.forecastday[1]
+                    ?.date ?? ""
+                ).getDay()
+              ]
+            }
+            minTempratureDayOne={
+              activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
+                ?.mintemp_c
+            }
+            maxTempratureDayOne={
+              activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
+                ?.maxtemp_c
+            }
+            dayTwo={
+              weekday[
+                new Date(
+                  activeCityForecastObject?.data?.forecast?.forecastday[2]
+                    ?.date ?? ""
+                ).getDay()
+              ]
+            }
+            minTempratureDayTwo={
+              activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
+                ?.mintemp_c
+            }
+            maxTempratureDayTwo={
+              activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
+                ?.maxtemp_c
+            }
+          />
+
           <div className="grid grid-cols-3 auto-cols-min w-max self-center gap-4">
             <InfoBox title={"UV"} info={weatherData?.current?.uv} />
             <InfoBox
@@ -120,12 +179,18 @@ export const HomePage: React.FC = () => {
             {showSunset ? (
               <InfoBox
                 title={"Sunset"}
-                info={forecastData?.forecast?.forecastday[0]?.astro?.sunset}
+                info={
+                  activeCityForecastObject?.data?.forecast?.forecastday[0]
+                    ?.astro?.sunset ?? 0
+                }
               />
             ) : (
               <InfoBox
                 title={"Sunrise"}
-                info={forecastData?.forecast?.forecastday[0]?.astro?.sunrise}
+                info={
+                  activeCityForecastObject?.data?.forecast?.forecastday[0]
+                    ?.astro?.sunrise ?? 0
+                }
               />
             )}
             <InfoBox

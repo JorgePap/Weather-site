@@ -10,9 +10,9 @@ function* forecastWorker (action:{type:string, payload:IGetForecastRequest}) {
     try{
         const requestParams = action.payload
         const response: IForecast = yield call(fetchForecast, requestParams) 
-        yield put(fetchForecastSuccess(response)) 
+        yield put(fetchForecastSuccess({data: response, location: requestParams.location})) 
     }catch(error){
-        yield put(fetchForecastError(error as AxiosError)) 
+        yield put(fetchForecastError({error: error as AxiosError, location: action.payload.location})) 
     }
 }
 

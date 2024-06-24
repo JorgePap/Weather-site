@@ -12,9 +12,14 @@ import { FaCirclePlus } from "react-icons/fa6";
 interface Props {
   onLocationSelected: (location: string) => void;
   name: string;
+  extraClasses?: string;
 }
 
-export const Input: React.FC<Props> = ({ name, onLocationSelected }) => {
+export const Input: React.FC<Props> = ({
+  name,
+  onLocationSelected,
+  extraClasses,
+}) => {
   const dispatch = useAppDispatch();
   const autoCompleteData: IAutoComplete[] = useAppSelector(selectAutoComplete);
 
@@ -41,7 +46,7 @@ export const Input: React.FC<Props> = ({ name, onLocationSelected }) => {
   return (
     <div
       onClick={handleOuterDivClick}
-      className={`relative bg-[#4F4F4F] cursor-text ${
+      className={`relative bg-[#4F4F4F] cursor-text ${extraClasses} ${
         autoCompleteData?.length > 0 ? "rounded-t-xl" : "rounded-full"
       }`}
     >
