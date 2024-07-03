@@ -1,5 +1,5 @@
 export enum PATHS {
     HOME = "/",
-    FIVEDAYSFORECAST = "/five-days-forecast",
+    FORECASTPAGE = "/forecast",
     CITIESMANAGEMENT = "/cities-management",
 }

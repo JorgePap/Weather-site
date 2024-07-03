@@ -9,7 +9,7 @@ import rootReducer from './slices/rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['allCities'], // Add reducers you want to persist
+  whitelist: ['allCities', 'activeCity'], // Add reducers you want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

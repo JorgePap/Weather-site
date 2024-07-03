@@ -82,8 +82,6 @@ export const HomePage: React.FC = () => {
   const todaysMaxTemp =
     activeCityForecastObject?.data?.forecast?.forecastday[0]?.day?.maxtemp_c;
 
-  console.log(activeCityForecastObject?.data?.forecast?.forecastday[3]?.date);
-
   return (
     <AnimatedPage>
       <div
@@ -112,17 +110,19 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
           <div>
-            <Warnings
-              category={
-                activeCityForecastObject?.data?.alerts?.alert[0]?.category
-              }
-              effective={formatTime(
-                activeCityForecastObject?.data?.alerts?.alert[0]?.effective
-              )}
-              expires={formatTime(
-                activeCityForecastObject?.data?.alerts?.alert[0]?.expires
-              )}
-            />
+            {activeCityForecastObject?.data?.alerts?.alert[0]?.category && (
+              <Warnings
+                category={
+                  activeCityForecastObject?.data?.alerts?.alert[0]?.category
+                }
+                effective={formatTime(
+                  activeCityForecastObject?.data?.alerts?.alert[0]?.effective
+                )}
+                expires={formatTime(
+                  activeCityForecastObject?.data?.alerts?.alert[0]?.expires
+                )}
+              />
+            )}
           </div>
 
           <FiveDaysForecast

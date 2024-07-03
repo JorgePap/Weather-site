@@ -133,5 +133,3 @@ export const CitiesManagement: React.FC = () => {
     </AnimatedPage>
   );
 };
-
-export default CitiesManagement;

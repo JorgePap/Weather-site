@@ -1,5 +1,7 @@
 import { OneDayForecast } from "../one_day_forecast";
 import { SunnyWeatherIcon } from "../../../assets/SunnyWeatherIcon";
+import { PATHS } from "@domain";
+import { Link } from "react-router-dom";
 
 interface Props {
   dayOne?: string;
@@ -35,11 +37,13 @@ export const FiveDaysForecast: React.FC<Props> = ({
       />
       <div className="w-full h-[1px] border border-[1px] border-white/[15%]"></div>
 
-      <div className="flex justify-center w-full">
-        <button className="rounded-lg bg-white/[20%] w-full max-w-[15rem]">
-          5-day forecast
-        </button>
-      </div>
+      <Link to={PATHS.FORECASTPAGE}>
+        <div className="flex justify-center w-full">
+          <button className="rounded-lg bg-white/[20%] w-full max-w-[15rem]">
+            2-day forecast
+          </button>
+        </div>
+      </Link>
     </div>
   );
 };

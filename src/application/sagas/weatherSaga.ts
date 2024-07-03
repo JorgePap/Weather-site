@@ -8,7 +8,6 @@ function* weatherWorker (action:{type:string, payload:string}) {
     try{
         const location = action.payload
         const response: IWeather = yield call(fetchWeather, location) 
-        console.log(response)
         yield put(fetchWeatherSuccess(response)) 
     }catch(error){
         yield put(fetchWeatherError(error as AxiosError)) 
