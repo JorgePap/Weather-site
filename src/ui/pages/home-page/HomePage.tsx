@@ -41,11 +41,9 @@ export const HomePage: React.FC = () => {
 
   useEffect(() => {
     const city = "Athens";
-    if (!activeCityData) {
-      dispatch(setActiveCity(city));
-      dispatch(fetchWeather(city));
-      dispatch(fetchForecast({ location: city, days: 3 }));
-    }
+    dispatch(setActiveCity(city));
+    dispatch(fetchWeather(city));
+    dispatch(fetchForecast({ location: city, days: 3 }));
     // dispatch(fetchAutoComplete("Lon"));
   }, [dispatch, activeCityData]);
 
