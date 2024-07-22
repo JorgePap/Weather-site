@@ -5,6 +5,9 @@ import {
   useAppSelector,
   selectAllCitiesData,
   ForecastState,
+  removeCity,
+  clearForecast,
+  setActiveCity,
 } from "@application";
 import { AIRQUALITY, IForecast, PATHS } from "@domain";
 import { AnimatedPage, Input } from "@ui";
@@ -18,7 +21,6 @@ export const CitiesManagement: React.FC = () => {
   const allCitiesData: string[] = useAppSelector(selectAllCitiesData);
   const forecastData: { [key: string]: ForecastState } =
     useAppSelector(selectForecastData);
-
   const [secondScrollY, setSecondScrollY] = useState(0);
   const [upperCitiesManagementClasses, setUpperCitiesManagementClasses] =
     useState<string>("hidden");
@@ -26,6 +28,13 @@ export const CitiesManagement: React.FC = () => {
     secondCitiesManagementItemClasses,
     setSecondCitiesManagementItemClasses,
   ] = useState<string>("");
+
+  useEffect(() => {
+    dispatch(clearForecast());
+    allCitiesData.map((city) => {
+      dispatch(fetchForecast({ location: city, days: 2 }));
+    });
+  }, [dispatch, allCitiesData]);
 
   const hasScrolled = useRef(false); // useRef to track if the dispatch has occurred
 
@@ -65,12 +74,6 @@ export const CitiesManagement: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    allCitiesData.map((city) => {
-      dispatch(fetchForecast({ location: city, days: 5 }));
-    });
-  }, [dispatch, allCitiesData]);
-
   // Calculate the scale factor based on the scroll position
   const scaleFactor = 1 - secondScrollY / 50; // Scale from 1 to 0 as the user scrolls from 0px to 100px
   const opacityFactor = 1 - secondScrollY / 50; // Opacity from 1 to 0 as the user scrolls from 0px to 100px
@@ -98,10 +101,7 @@ export const CitiesManagement: React.FC = () => {
             }}
           >
             <form className="w-full transition-all duration-300 focus:outline-none">
-              <Input
-                name={"SearchCity"}
-                onLocationSelected={() => console.log("Selected Location:")}
-              />
+              <Input name={"SearchCity"} />
             </form>
           </div>
 
@@ -110,7 +110,9 @@ export const CitiesManagement: React.FC = () => {
               if (!city) return null;
 
               return (
-                <li key={city.location.name}>
+                <li
+                  key={`${city.location.name}${city.location.country}${city.location.region}`}
+                >
                   <City
                     cityName={city?.location?.name}
                     airQuality={
@@ -123,6 +125,12 @@ export const CitiesManagement: React.FC = () => {
                       city?.forecast?.forecastday[0]?.day?.maxtemp_c
                     }
                     currentTemprature={city?.current?.temp_c}
+                    onClickDeleteButton={() => {
+                      dispatch(removeCity(city.location.name));
+                    }}
+                    onClickSetActiveButton={() => {
+                      dispatch(setActiveCity(city.location.name));
+                    }}
                   />
                 </li>
               );

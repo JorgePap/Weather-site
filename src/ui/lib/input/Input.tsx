@@ -4,22 +4,18 @@ import {
   useAppDispatch,
   useAppSelector,
   fetchAutoComplete,
+  addCity,
 } from "@application";
 import { IAutoComplete } from "@domain";
 import { CiSearch } from "react-icons/ci";
 import { FaCirclePlus } from "react-icons/fa6";
 
 interface Props {
-  onLocationSelected: (location: string) => void;
   name: string;
   extraClasses?: string;
 }
 
-export const Input: React.FC<Props> = ({
-  name,
-  onLocationSelected,
-  extraClasses,
-}) => {
+export const Input: React.FC<Props> = ({ name, extraClasses }) => {
   const dispatch = useAppDispatch();
   const autoCompleteData: IAutoComplete[] = useAppSelector(selectAutoComplete);
 
@@ -33,7 +29,6 @@ export const Input: React.FC<Props> = ({
 
   const handleSelectSuggestion = (selectedLocation: string) => {
     setQuery(selectedLocation);
-    onLocationSelected(selectedLocation);
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,6 +36,10 @@ export const Input: React.FC<Props> = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  };
+
+  const handleAddCityButton = (city: string) => {
+    dispatch(addCity(city));
   };
 
   return (
@@ -68,14 +67,16 @@ export const Input: React.FC<Props> = ({
           autoCompleteData?.length > 0 ? "bg-[#4F4F4F]" : ""
         }`}
       >
-        {autoCompleteData?.map((location, index) => (
+        {autoCompleteData?.map((location) => (
           <li
             className="flex justify-between items-center"
-            key={index}
+            key={`${location.name}${location.country}${location.region}`}
             onClick={() => handleSelectSuggestion(location.name)}
           >
-            {location.name}
-            <button>
+            <p>
+              {location.name} ({location?.country},{location?.region})
+            </p>
+            <button onClick={() => handleAddCityButton(location.name)}>
               <FaCirclePlus fontSize="20px" color="white" />
             </button>
           </li>

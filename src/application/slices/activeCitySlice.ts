@@ -6,7 +6,7 @@ interface ActiveCityState {
 }
 
 const initialState: ActiveCityState ={
-    data: '',
+    data: 'Athens',
 }
 
 export const activeCitySlice = createSlice({

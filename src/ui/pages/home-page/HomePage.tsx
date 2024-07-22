@@ -40,11 +40,8 @@ export const HomePage: React.FC = () => {
   ];
 
   useEffect(() => {
-    const city = "Athens";
-    dispatch(setActiveCity(city));
-    dispatch(fetchWeather(city));
-    dispatch(fetchForecast({ location: city, days: 3 }));
-    // dispatch(fetchAutoComplete("Lon"));
+    dispatch(fetchWeather(activeCityData));
+    dispatch(fetchForecast({ location: activeCityData, days: 3 }));
   }, [dispatch, activeCityData]);
 
   const formatTime = (isoTimeString?: string): string | undefined => {

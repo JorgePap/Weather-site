@@ -19,7 +19,7 @@ export const allCitiesSlice = createSlice({
               }
         },
         removeCity: (state, action: PayloadAction<string>) => {
-            if (!state.data.includes(action.payload)) {
+            if (state.data.includes(action.payload)) {
                 state.data = state.data?.filter(city => city !== action.payload)
             }
             

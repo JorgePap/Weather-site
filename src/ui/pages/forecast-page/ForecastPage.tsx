@@ -69,6 +69,9 @@ export const ForecastPage: React.FC = () => {
       </div>
       <div className="px-2 flex flex-col w-full items-center gap-20 min-h-screen max-w-screen-lg ">
         <div className="flex flex-col items-center gap-6">
+          <p className="text-3xl">
+            {activeCityForecastObject?.data?.location?.name}
+          </p>
           <div className="flex gap-2">
             <p>
               {

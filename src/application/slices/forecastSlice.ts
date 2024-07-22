@@ -33,10 +33,13 @@ export const forecastSlice = createSlice({
     fetchForecastError: (state, action: PayloadAction<{error: AxiosError, location: string}>) => {
       return {...state, [action.payload.location]: {data: initialRecord.data, error: action.payload.error, loading: initialRecord.loading}}
     },
+    clearForecast: (state) => {
+      return initialState
+    },
   },
 });
 
-export const { fetchForecast,fetchForecastSuccess,fetchForecastError } = forecastSlice.actions;
+export const { fetchForecast,fetchForecastSuccess,fetchForecastError,clearForecast } = forecastSlice.actions;
 
 export const selectForecastData = (state: RootState) => state.forecast
 export const selectForecastCityData = (state: RootState, key:string) => state.forecast[key].data
