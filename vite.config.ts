@@ -4,7 +4,6 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Weather-site/',
   plugins: [react(),
     VitePWA({
     manifest: {
@@ -14,6 +13,7 @@ export default defineConfig({
         "An app to display the weather for your location.",
     }
   })],
+  base: '/Weather-site/',
   resolve: {
     alias: {
       "@domain": "src/domain/index.ts",
