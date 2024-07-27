@@ -1,9 +1,10 @@
 import httpClient from "./httpClient"
 
 export const fetchAutoComplete = async (location: string) => {
+    const apiKey = import.meta.env.VITE_API_KEY
     const {data} = await httpClient.get('/v1/search.json', {
         params: {
-            key: 'c3f2c186ec8b42dc8d4105328230411',
+            key: apiKey,
             q: location
         }
     })

@@ -6,7 +6,7 @@ interface AllCitiesState {
 }
 
 const initialState: AllCitiesState = {
-    data: ["Athens", "London"], // Initialize with Athens
+    data: ["Athens"], // Initialize with Athens
 }
 
 export const allCitiesSlice = createSlice({
