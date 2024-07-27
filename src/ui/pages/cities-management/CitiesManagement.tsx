@@ -9,7 +9,7 @@ import {
   clearForecast,
   setActiveCity,
 } from "@application";
-import { AIRQUALITY, IForecast, PATHS } from "@domain";
+import { AIRQUALITY, PATHS } from "@domain";
 import { AnimatedPage, Input } from "@ui";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";

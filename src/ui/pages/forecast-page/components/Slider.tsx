@@ -7,14 +7,14 @@ interface Props {
   extraClasses?: string;
   activeCityForecastObject?: ForecastState;
   forecastday: number;
-  imageSrc?: string;
+  // imageSrc?: string;
 }
 
 export const Slider: React.FC<Props> = ({
   extraClasses,
   activeCityForecastObject,
   forecastday,
-  imageSrc,
+  // imageSrc,
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
@@ -113,7 +113,7 @@ export const Slider: React.FC<Props> = ({
                 hour={formattedDate}
                 temprature={data?.temp_c}
                 humidity={data?.humidity}
-                imageSrc={data?.condition?.icon}
+                // imageSrc={data?.condition?.icon}
               />
             </div>
           );

@@ -1,5 +1,4 @@
 import { selectActiveCityData, useAppSelector } from "@application";
-import { useState } from "react";
 
 interface Props {
   cityName: string;

@@ -8,20 +8,16 @@ import {
   useAppDispatch,
   useAppSelector,
   selectAutoComplete,
-  fetchAutoComplete,
-  selectAllCitiesData,
   selectActiveCityData,
-  setActiveCity,
   ForecastState,
 } from "@application";
-import { IAutoComplete, IForecast, IWeather, PATHS } from "@domain";
+import { IAutoComplete, IWeather, PATHS } from "@domain";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { AnimatedPage, FiveDaysForecast, InfoBox, Warnings } from "@ui";
 
 export const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const allCitiesData: string[] = useAppSelector(selectAllCitiesData);
   const activeCityData: string = useAppSelector(selectActiveCityData);
   const weatherData: IWeather = useAppSelector(selectWeatherData);
   const forecastData: { [key: string]: ForecastState } =

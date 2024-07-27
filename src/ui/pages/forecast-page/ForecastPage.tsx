@@ -25,30 +25,30 @@ export const ForecastPage: React.FC = () => {
     }
   }, [dispatch, activeCityData]);
 
-  let dayOneAvgTemp: number = 0;
-  let dayTwoAvgTemp: number = 0;
-  if (
-    activeCityForecastObject?.data?.forecast?.forecastday[1]?.day?.mintemp_c &&
-    activeCityForecastObject?.data?.forecast?.forecastday[1]?.day?.maxtemp_c
-  ) {
-    dayOneAvgTemp =
-      (activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
-        ?.mintemp_c +
-        activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
-          ?.maxtemp_c) /
-      2;
-  }
-  if (
-    activeCityForecastObject?.data?.forecast?.forecastday[2]?.day?.mintemp_c &&
-    activeCityForecastObject?.data?.forecast?.forecastday[2]?.day?.maxtemp_c
-  ) {
-    dayTwoAvgTemp =
-      (activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
-        ?.mintemp_c +
-        activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
-          ?.maxtemp_c) /
-      2;
-  }
+  // let dayOneAvgTemp: number = 0;
+  // let dayTwoAvgTemp: number = 0;
+  // if (
+  //   activeCityForecastObject?.data?.forecast?.forecastday[1]?.day?.mintemp_c &&
+  //   activeCityForecastObject?.data?.forecast?.forecastday[1]?.day?.maxtemp_c
+  // ) {
+  //   dayOneAvgTemp =
+  //     (activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
+  //       ?.mintemp_c +
+  //       activeCityForecastObject?.data?.forecast?.forecastday[1]?.day
+  //         ?.maxtemp_c) /
+  //     2;
+  // }
+  // if (
+  //   activeCityForecastObject?.data?.forecast?.forecastday[2]?.day?.mintemp_c &&
+  //   activeCityForecastObject?.data?.forecast?.forecastday[2]?.day?.maxtemp_c
+  // ) {
+  //   dayTwoAvgTemp =
+  //     (activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
+  //       ?.mintemp_c +
+  //       activeCityForecastObject?.data?.forecast?.forecastday[2]?.day
+  //         ?.maxtemp_c) /
+  //     2;
+  // }
   const weekday = [
     "Sunday",
     "Monday",
