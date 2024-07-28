@@ -19,7 +19,7 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
   reducers: {
-    fetchWeather: (state, action: PayloadAction<string>) => {
+    fetchWeather: (state, _action: PayloadAction<string>) => {
       state.loading = true
     },
     fetchWeatherSuccess: (state, action: PayloadAction<IWeather>) => {

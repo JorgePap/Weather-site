@@ -1,6 +1,7 @@
 export interface IWeather {
     location: Location;
     current:  Current;
+    condition: Condition;
 }
 
 export interface Current {

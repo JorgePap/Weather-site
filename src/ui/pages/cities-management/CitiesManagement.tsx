@@ -116,7 +116,11 @@ export const CitiesManagement: React.FC = () => {
                   <City
                     cityName={city?.location?.name}
                     airQuality={
-                      AIRQUALITY[city?.current?.air_quality?.["us-epa-index"]]
+                      AIRQUALITY[
+                        city?.forecast?.forecastday[0]?.day?.air_quality?.[
+                          "us-epa-index"
+                        ]
+                      ]
                     }
                     minTemprature={
                       city?.forecast?.forecastday[0]?.day?.mintemp_c

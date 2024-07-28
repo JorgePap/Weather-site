@@ -19,7 +19,7 @@ export const autoCompleteSlice = createSlice({
     name: 'autoComplete',
     initialState,
     reducers: {
-        fetchAutoComplete: (state, action: PayloadAction<string>) => {
+        fetchAutoComplete: (state, _action: PayloadAction<string>) => {
             state.loading = true
         },
         fetchAutoCompleteSuccess: (state, action: PayloadAction<IAutoComplete[]>) => {
