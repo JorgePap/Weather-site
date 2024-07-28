@@ -1,14 +1,14 @@
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Routing } from "./router/Routing";
 // import { NavBar } from "./ui/lib";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* <NavBar /> */}
       <Routing />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
