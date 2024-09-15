@@ -113,7 +113,7 @@ export const Slider: React.FC<Props> = ({
                 hour={formattedDate}
                 temprature={data?.temp_c}
                 humidity={data?.humidity}
-                // imageSrc={data?.condition?.icon}
+                imageSrc={data?.condition?.icon}
               />
             </div>
           );
