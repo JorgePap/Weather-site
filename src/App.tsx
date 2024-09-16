@@ -8,7 +8,6 @@ function App() {
 
   return (
     <HashRouter basename={basename}>
-      {/* <NavBar /> */}
       <Routing />
     </HashRouter>
   );
