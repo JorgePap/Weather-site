@@ -6,14 +6,18 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   plugins: [react(),
     VitePWA({
-    manifest: {
-      name: "Weather Site",
-      short_name: "Weather",
-      description:
-        "An app to display the weather for your location.",
-    }
-  })],
-  base: "/",
+      manifest: {
+        name: "Weather Site",
+        short_name: "Weather",
+        description: "An app to display the weather for your location.",
+      },
+      workbox: {
+        navigateFallback: '/Weather-site/',
+      },
+      registerType: 'autoUpdate',  // Ensures SW updates automatically
+      base: '/Weather-site/',  // Ensures SW files are correctly registered
+    })],
+  base: "/Weather-site/",
   resolve: {
     alias: {
       "@domain": "src/domain/index.ts",
