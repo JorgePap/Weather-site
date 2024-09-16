@@ -1,1 +1,1 @@
-{"name":"Weather Site","short_name":"Weather","start_url":"https://jorgepap.github.io/Weather-site/","display":"standalone","background_color":"#ffffff","lang":"en","scope":"https://jorgepap.github.io/Weather-site/","description":"An app to display the weather for your location."}
+{"name":"Weather Site","short_name":"Weather","start_url":"/Weather-site/","display":"standalone","background_color":"#ffffff","lang":"en","scope":"/Weather-site/","description":"An app to display the weather for your location."}
