@@ -4,7 +4,7 @@ import { Routing } from "./router/Routing";
 // import { NavBar } from "./ui/lib";
 
 function App() {
-  const basename = "/Weather-site/";
+  const basename = "/";
 
   return (
     <HashRouter basename={basename}>

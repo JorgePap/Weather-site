@@ -13,7 +13,7 @@ export default defineConfig({
         "An app to display the weather for your location.",
     }
   })],
-  base: "/Weather-site/",
+  base: "/",
   resolve: {
     alias: {
       "@domain": "src/domain/index.ts",
