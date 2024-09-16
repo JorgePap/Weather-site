@@ -4,8 +4,10 @@ import { Routing } from "./router/Routing";
 // import { NavBar } from "./ui/lib";
 
 function App() {
+  const basename = "/Weather-site/";
+
   return (
-    <HashRouter>
+    <HashRouter basename={basename}>
       {/* <NavBar /> */}
       <Routing />
     </HashRouter>
