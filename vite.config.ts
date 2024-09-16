@@ -15,9 +15,7 @@ export default defineConfig({
         navigateFallback: '/Weather-site/',
       },
       registerType: 'autoUpdate',  // Ensures SW updates automatically
-      base: '/Weather-site/',  // Ensures SW files are correctly registered
     })],
-  base: "/Weather-site/",
   resolve: {
     alias: {
       "@domain": "src/domain/index.ts",
